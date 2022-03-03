@@ -74,8 +74,11 @@ let timer = 0;
 // 장애물 배열
 const cactusArr = [];
 
+// Animation 변수
+let animation;
+
 function perFrame() {
-  requestAnimationFrame(perFrame);
+  animation = requestAnimationFrame(perFrame);
   timer++;
 
   // canvas 초기화
@@ -112,7 +115,7 @@ function perFrame() {
     }
   });
 
-  
+
 }
 perFrame();
 
@@ -124,6 +127,6 @@ function isCollision(dino, cactus) {
      cactus.collisionBox.x2 >= dino.collisionBox.x1 &&
      cactus.collisionBox.y2 >= dino.collisionBox.y1) {
     console.log("부딪힘");
-    
+    cancelAnimationFrame(animation);
   }
 }
