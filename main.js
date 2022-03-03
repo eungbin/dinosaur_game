@@ -20,6 +20,12 @@ let dino = {
   draw() {
     ctx.fillStyle = 'green';
     ctx.fillRect(this.x, this.y, this.width, this.height);
+    this.collisionBox = {
+      x1: this.x,
+      x2: this.x+this.width,
+      y1: this.y,
+      y2: this.y+this.height,
+    };
   },
   jump() {
     this.y += this.moveY;
@@ -43,6 +49,12 @@ class Cactus {
   draw() {
     ctx.fillStyle = 'red';
     ctx.fillRect(this.x, this.y, this.width, this.height);
+    this.collisionBox = {
+      x1: this.x,
+      x2: this.x + this.width,
+      y1: this.y,
+      y2: this.y + this.height,
+    };
   }
 }
 
@@ -92,6 +104,7 @@ function perFrame() {
   cactusArr.forEach((a, index) => {
     a.draw();
     a.x--;
+    isCollision(dino, a);
     
     // 장애물이 화면 밖으로 나가면 제거
     if(a.x < 0) {
@@ -99,5 +112,18 @@ function perFrame() {
     }
   });
 
+  
 }
 perFrame();
+
+
+// 두 번째 인자의 오브젝트가 첫 번째 인자의 오브젝트와 충돌하였는가
+function isCollision(dino, cactus) {
+  if(cactus.collisionBox.x1 <= dino.collisionBox.x2 &&
+     cactus.collisionBox.y1 <= dino.collisionBox.y2 &&
+     cactus.collisionBox.x2 >= dino.collisionBox.x1 &&
+     cactus.collisionBox.y2 >= dino.collisionBox.y1) {
+    console.log("부딪힘");
+    
+  }
+}
