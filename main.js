@@ -71,11 +71,20 @@ document.addEventListener('keydown', function(e) {
 // 장애물 생성 Timer & 게임 Timer
 let timer = 0;
 
+// 점프 Timer
+let jumpTimer = 0;
+
 // 장애물 배열
 const cactusArr = [];
 
 // Animation 변수
 let animation;
+
+// 중력 변수
+const gravity = 0.1;
+
+// 점프 파워
+const jumpPower = 5.5;
 
 function perFrame() {
   animation = requestAnimationFrame(perFrame);
@@ -88,12 +97,14 @@ function perFrame() {
   dino.jump();
 
   // 플레이어 점프 제어구문
-  if(jump === true && dino.y > 100) {
-    dino.moveY = -1;
-  } else if(jump === true && dino.y === 100) {
+  if(jump === true && dino.moveY === 0) {
+    dino.moveY = jumpPower * -1;
+  } else if(jump === true && dino.moveY !== 0) {
+    dino.moveY += gravity
+  }
+  if(jump === true && dino.y > 200) {
     jump = false;
-    dino.moveY = 1;
-  } else if(jump === false && dino.y === 200) {
+    dino.y = 200;
     dino.moveY = 0;
   }
   
